@@ -2,36 +2,31 @@
 
 {% block content %}
     
-    <ul>
+<div class="container mt-4">
+    <h1 class="mb-4">Task List</h1>
+    
+    <ul class="list-unstyled">
         {% for task in tasks %}
-            <li>
-                <strong>{{ task.name }}</strong>
-                <p>Category: {{ task.category.name }}</p>
-                <p>End Date: {{ task.end_date }}</p>
-                <p>Description: {{ task.description }}</p>
-                
-                <form action="{% url 'update_task' task.id %}" method="post">
-                    {% csrf_token %}
-                    <label>
-                        <input type="text" name="name" value="{{ task.name }}">
-                    </label>
-                    <label>
-                        <input type="text" name="description" value="{{ task.description }}">
-                    </label>
-                    <label>
-                        <input type="date" name="end_date" value="{{ task.end_date }}">
-                    </label>
-                    <button type="submit">Update Task</button>
-                </form>
-                
-                <form action="{% url 'delete_task' task.id %}" method="post" style="display:inline;">
-                    {% csrf_token %}
-                    <button type="submit">Delete Task</button>
-                </form>
+            <li class="card mb-3 p-3" style="border-radius: 8px;">
+                <div class="card-body">
+                    <h5 class="card-title"><strong>{{ task.title }}</strong></h5>
+                    <p class="card-text">Category: {{ task.category.name }}</p>
+                    <p class="card-text">End Date: {{ task.end_date }}</p>
+                    <p class="card-text">Description: {{ task.description }}</p>
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'update_task' task.id %}" class="btn btn-primary">Edit</a>
+                        
+                        <form action="{% url 'delete_task' task.id %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </div>
+                </div>
             </li>
         {% empty %}
             <li>No tasks available.</li>
         {% endfor %}
     </ul>
+</div>
 
 {% endblock %}

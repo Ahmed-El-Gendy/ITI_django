@@ -16,13 +16,21 @@ def index(request):
 
 def update_task(request, task_id):
     task = get_object_or_404(Task, id=task_id)
+    categories = Category.objects.all()
+
     if request.method == "POST":
         task.name = request.POST.get('name')
         task.description = request.POST.get('description')
         task.end_date = request.POST.get('end_date')
+        task.category_id = request.POST.get('category')
         task.save()
-        return redirect('index')  # Redirect back to the task list view
-    return render(request, 'Todo/update_task.html', {'task': task})
+        return redirect('index')
+
+    context = {
+        'task': task,
+        'categories': categories
+    }
+    return render(request, 'Todo/update_task.html', context)
 
 
 def delete_task(request, task_id):

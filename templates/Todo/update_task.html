@@ -1,0 +1,23 @@
+{% extends 'Todo/component/base.html' %}
+
+{% block content %}
+    
+    <h1>Update Task</h1>
+    <form action="" method="post">
+        {% csrf_token %}
+        <label for="name">Task Name:</label>
+        <label>
+            <input type="text" name="name" value="{{ task.name }}">
+        </label>
+        <label for="description">Description:</label>
+        <label>
+            <input type="text" name="description" value="{{ task.description }}">
+        </label>
+        <label for="end_date">End Date:</label>
+        <label>
+            <input type="date" name="end_date" value="{{ task.end_date }}">
+        </label>
+        <button type="submit">Update</button>
+    </form>
+
+{% endblock %}

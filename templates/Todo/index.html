@@ -1,0 +1,37 @@
+{% extends 'Todo/component/base.html' %}
+
+{% block content %}
+    
+    <ul>
+        {% for task in tasks %}
+            <li>
+                <strong>{{ task.name }}</strong>
+                <p>Category: {{ task.category.name }}</p>
+                <p>End Date: {{ task.end_date }}</p>
+                <p>Description: {{ task.description }}</p>
+                
+                <form action="{% url 'update_task' task.id %}" method="post">
+                    {% csrf_token %}
+                    <label>
+                        <input type="text" name="name" value="{{ task.name }}">
+                    </label>
+                    <label>
+                        <input type="text" name="description" value="{{ task.description }}">
+                    </label>
+                    <label>
+                        <input type="date" name="end_date" value="{{ task.end_date }}">
+                    </label>
+                    <button type="submit">Update Task</button>
+                </form>
+                
+                <form action="{% url 'delete_task' task.id %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit">Delete Task</button>
+                </form>
+            </li>
+        {% empty %}
+            <li>No tasks available.</li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}

@@ -19,7 +19,7 @@ def update_task(request, task_id):
     categories = Category.objects.all()
 
     if request.method == "POST":
-        task.name = request.POST.get('name')
+        task.title = request.POST.get('name')
         task.description = request.POST.get('description')
         task.end_date = request.POST.get('end_date')
         task.category_id = request.POST.get('category')
